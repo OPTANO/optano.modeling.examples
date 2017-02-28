@@ -68,7 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="documentation.zip" />
     <None Include="OptimizationConfigSection.csd.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -117,9 +116,6 @@
       <Project>{AC926272-BD5E-470A-A955-5B1853B8EDA6}</Project>
       <Name>MIP_NDP</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

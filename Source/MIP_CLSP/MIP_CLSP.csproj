@@ -71,7 +71,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="optano.modeling, Version=0.0.0.1, Culture=neutral, PublicKeyToken=41b74c8b864fd6b1, processorArchitecture=MSIL">
-      <HintPath>..\packages\OPTANO.Modeling.1.1.0.191\lib\net40\optano.modeling.dll</HintPath>
+      <HintPath>..\packages\OPTANO.Modeling.1.2.0.201\lib\net40\optano.modeling.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

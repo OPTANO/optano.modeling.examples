@@ -11,7 +11,7 @@ namespace QueensProblem
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi652;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi702;
     using System.Collections;
 
     /// <summary>

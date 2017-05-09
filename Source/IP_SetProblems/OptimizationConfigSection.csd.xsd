@@ -91,12 +91,32 @@
 		</xs:attribute>
 		<xs:attribute name="orConstraintReplacement" use="optional" type="xs:string">
 			<xs:annotation>
-				<xs:documentation>###</xs:documentation>
+				<xs:documentation>The override for OrConstraintReplacement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="sos1HandlingOverride" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Override for SOS1 Handling</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="restoreUserModelAfterSolve" use="optional" type="xs:boolean">
 			<xs:annotation>
 				<xs:documentation>###</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nativeMultiObjectiveSupport" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The NativeMultiObjectiveSupport.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="sos2HandlingOverride" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Override for SOS1 Handling</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="sos3HandlingOverride" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Override for SOS3 Handling</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>

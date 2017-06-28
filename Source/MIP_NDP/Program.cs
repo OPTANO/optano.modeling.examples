@@ -37,12 +37,13 @@ namespace NDP
             var nodes = new List<INode> { pb, ny, b, sp, sf };
 
             // create example Edges
-            IEdge one = new Edge(pb, ny, null, 3, 6100);
-            IEdge two = new Edge(ny, b, null, 2, 11000);
-            IEdge three = new Edge(b, sp, 75, 1, 17600);
-            IEdge four = new Edge(sp, sf, null, 4, 10500);
-            IEdge five = new Edge(pb, sp, null, 5, 9900);
-            IEdge six = new Edge(b, pb, 50, 1, 7600);
+            IEdge one = new Edge(ny, pb, null, 3, 6100);
+            IEdge two = new Edge(b, ny, null, 2, 11000);
+            IEdge three = new Edge(sp, b, 75, 1, 17600);
+            IEdge four = new Edge(sf, sp, null, 4, 10500);
+            IEdge five = new Edge(sp, pb, null, 5, 9900);
+            IEdge six = new Edge(pb, b, 50, 1, 7600);
+
             // assign these edges to a list of IEdges
             var edges = new List<IEdge>{one, two, three, four, five, six};
 

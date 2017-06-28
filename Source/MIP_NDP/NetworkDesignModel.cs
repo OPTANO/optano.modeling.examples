@@ -34,13 +34,20 @@ namespace NDP
                
             // Flow-Variables
             this.x = new VariableCollection<IEdge>(
-                this.Model, // register with this.Model
-                this.Edges, // Index is just the edge (might have time period in a more advanced problem)
-                "x", // the name of the variable collection
-                edge => new StringBuilder($"Flow {edge.FromNode} to {edge.ToNode}"), // Label-Generator
-                edge => 0, // Lower Bound, 0 is default 
-                edge => edge.Capacity ?? double.PositiveInfinity, // if Capacity is set, use as upper bound (otherwise double.PositiveInfinity for unbounded)
-                VariableType.Continuous); // Continuous Variable (is default)
+                // register with this.Model
+                this.Model,
+                // Index is just the edge (might have time period in a more advanced problem)
+                this.Edges,
+                // the name of the variable collection
+                "x",
+                // Label-Generator
+                edge => new StringBuilder($"Flow {edge.FromNode} to {edge.ToNode}"),
+                // Lower Bound, 0 is default 
+                edge => 0,
+                // if Capacity is set, use as upper bound (otherwise double.PositiveInfinity for unbounded)
+                edge => edge.Capacity ?? double.PositiveInfinity,
+                // Continuous Variable (is default)
+                VariableType.Continuous); 
 
             // Design-Variables
             this.y = new VariableCollection<IEdge>(
@@ -59,8 +66,8 @@ namespace NDP
             {
                 // Add Constraint to model
                 this.Model.AddConstraint(
-                    Expression.Sum(this.Edges.Where(e => e.FromNode == node).Select(edge => this.x[edge])) // flows of every edge departing from the node
-                    == Expression.Sum(this.Edges.Where(e => e.ToNode == node).Select(edge => this.x[edge]))  // equal flow of every edge arriving at the node
+                    Expression.Sum(this.Edges.Where(e => e.ToNode == node).Select(edge => this.x[edge])) // equal flow of every edge arriving at the node
+                    == Expression.Sum(this.Edges.Where(e => e.FromNode == node).Select(edge => this.x[edge]))  // flows of every edge departing from the node
                     + node.Demand, // plus the demand to fulfill
                     $"FlowBalance, {node}"); // name of the constraint for debug use.
             }

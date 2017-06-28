@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIP_NDP", "MIP_NDP\MIP_NDP.csproj", "{AC926272-BD5E-470A-A955-5B1853B8EDA6}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIP_JobScheduling", "MIP_JobSchedule\MIP_JobScheduling.csproj", "{DE0A9B51-BF2C-4525-853E-440F0E974EA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IP_Sudoku", "IP_Sudoku\IP_Sudoku.csproj", "{CC1B7145-AF56-484E-AF6B-8AA35CA35D0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIP_NDP_Tests", "MIP_NDP_Tests\MIP_NDP_Tests.csproj", "{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,14 @@ Global
 		{CC1B7145-AF56-484E-AF6B-8AA35CA35D0F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CC1B7145-AF56-484E-AF6B-8AA35CA35D0F}.Release|x64.ActiveCfg = Release|Any CPU
 		{CC1B7145-AF56-484E-AF6B-8AA35CA35D0F}.Release|x64.Build.0 = Release|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{3BA111EA-2C3C-43C5-A003-36A0401DA9BB}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

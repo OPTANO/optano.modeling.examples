@@ -99,7 +99,7 @@ namespace MIP_NDP_Tests
             {
                 // Test is flow balance is correct in the tolerance of epsilon
                 Assert.IsTrue(edges.Where(e => e.FromNode == node).Select(e => designModel.x[e].Value).Sum() + node.Demand // all leaving flow and demand
-                    - (edges.Where(e => e.FromNode == node).Select(e => designModel.x[e].Value).Sum()) // minus all incoming flow
+                    - (edges.Where(e => e.ToNode == node).Select(e => designModel.x[e].Value).Sum()) // minus all incoming flow
                     <= scopeSettings.ModelElement.Epsilon); // must be zero (is a match)
             }
         }

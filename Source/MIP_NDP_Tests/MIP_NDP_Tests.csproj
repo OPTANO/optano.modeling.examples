@@ -48,7 +48,7 @@
       <HintPath>..\packages\FSharp.Core.3.1.2.5\lib\net40\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="Gurobi70.NET">
-      <HintPath>..\..\..\..\..\..\gurobi702\win64\bin\Gurobi70.NET.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\gurobi702\win64\bin\Gurobi70.NET.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.3.8.0\lib\net40\MathNet.Numerics.dll</HintPath>

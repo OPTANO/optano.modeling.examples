@@ -66,9 +66,14 @@ namespace NDP
             {
                 // Add Constraint to model
                 this.Model.AddConstraint(
-                    Expression.Sum(this.Edges.Where(e => e.ToNode == node).Select(edge => this.x[edge])) // equal flow of every edge arriving at the node
-                    == Expression.Sum(this.Edges.Where(e => e.FromNode == node).Select(edge => this.x[edge]))  // flows of every edge departing from the node
-                    + node.Demand, // plus the demand to fulfill
+                    // equal flow of every edge arriving at the node
+                    Expression.Sum(this.Edges.Where(e => e.ToNode == node).Select(edge => this.x[edge]))
+
+                    // flows of every edge departing from the node
+                    == Expression.Sum(this.Edges.Where(e => e.FromNode == node).Select(edge => this.x[edge]))
+                    
+                    // plus the demand to fulfill
+                    + node.Demand, 
                     $"FlowBalance, {node}"); // name of the constraint for debug use.
             }
 
@@ -79,12 +84,17 @@ namespace NDP
             {
                 // Add Constraint to model
                 this.Model.AddConstraint(
-                    this.y[edge] >= this.x[edge] / (edge.Capacity ?? bigM), // Set y greater or equal to edge's usage ratio, use Big M is capacity is unbounded
-                    $"Desing_LowerBound {edge}"); // name of the constraint for debug use.
+
+                    // Set y greater or equal to edge's usage ratio, use Big M is capacity is unbounded
+                    this.y[edge] >= this.x[edge] / (edge.Capacity ?? bigM),
+                    // name of the constraint for debug use.
+                    $"Desing_LowerBound {edge}"); 
 
                 this.Model.AddConstraint(
-                   this.y[edge] <= this.x[edge], // Bound y to zero, if edge is not used at all (only required if design cost may be negative).
-                   $"Desing_UpperBound {edge}"); // name of the constraint for debug use.
+                    // Bound y to zero, if edge is not used at all (only required if design cost may be negative).
+                    this.y[edge] <= this.x[edge],
+                    // name of the constraint for debug use.
+                    $"Desing_UpperBound {edge}"); 
             }
 
             // Add the objective

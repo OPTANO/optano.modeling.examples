@@ -116,21 +116,19 @@ namespace JobScheduling
             // register tasks with jobs
             jobs.ForEach(job => job.Tasks.AddRange(tasks.Where(task => task.Job == job).OrderBy(task => task.StepNumber)));
 
-            var scopeSettings = new OptimizationConfigSection();
-            scopeSettings.ModelElement.EnableFullNames = true;
-            scopeSettings.ModelElement.ComputeRemovedVariables = true;
-
-
-            using (var scope = new ModelScope(scopeSettings))
+            var config = new Configuration();
+            config.EnableFullNames = true;
+            config.ComputeRemovedVariables = true;
+            using (var scope = new ModelScope(config))
             {
 
                 // create a model, based on given data and the model scope
                 var jobScheduleModel = new JobScheduleModel(jobs, setupTimes, tasks, ranks, machines);
 
                 // Get a solver instance, change your solver
-                CplexSolverConfiguration config = new CplexSolverConfiguration();
-                config.TimeLimit = 120;
-                var solver = new CplexSolver(config);
+                CplexSolverConfiguration cplexconfig = new CplexSolverConfiguration();
+                cplexconfig.TimeLimit = 120;
+                var solver = new CplexSolver(cplexconfig);
 
                 // solve the model
                 var solution = solver.Solve(jobScheduleModel.Model);

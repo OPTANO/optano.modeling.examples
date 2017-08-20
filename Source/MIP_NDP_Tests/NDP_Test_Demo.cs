@@ -23,7 +23,7 @@ namespace MIP_NDP_Tests
         /// <summary>
         /// Modeling Scope for all Tests
         /// </summary>
-        private OptimizationConfigSection scopeSettings;
+        private Configuration configuration;
 
         /// <summary>
         /// Re-used network design model for all tests
@@ -66,10 +66,10 @@ namespace MIP_NDP_Tests
             edges = new List<IEdge> { one, two, three, four, five, six };
 
             // use default settings
-            scopeSettings = new OptimizationConfigSection();
-            scopeSettings.ModelElement.EnableFullNames = true;
-            scopeSettings.ModelElement.ComputeRemovedVariables = true;
-            using (var scope = new ModelScope(scopeSettings))
+            var config = new Configuration();
+            config.EnableFullNames = true;
+            config.ComputeRemovedVariables = true;
+            using (var scope = new ModelScope(config))
             {
 
                 // create a model, based on given data and the model scope
@@ -83,7 +83,7 @@ namespace MIP_NDP_Tests
 
                 // import the results back into the model 
                 designModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
-                scope.ModelBehavior = OPTANO.Modeling.Optimization.Enums.ModelBehavior.Manual;
+                scope.ModelBehavior = OPTANO.Modeling.Optimization.Configuration.ModelBehavior.Manual;
             
             }
 
@@ -100,7 +100,7 @@ namespace MIP_NDP_Tests
                 // Test is flow balance is correct in the tolerance of epsilon
                 Assert.IsTrue(edges.Where(e => e.FromNode == node).Select(e => designModel.x[e].Value).Sum() + node.Demand // all leaving flow and demand
                     - (edges.Where(e => e.ToNode == node).Select(e => designModel.x[e].Value).Sum()) // minus all incoming flow
-                    <= scopeSettings.ModelElement.Epsilon); // must be zero (is a match)
+                    <= configuration.Epsilon); // must be zero (is a match)
             }
         }
 
@@ -110,7 +110,7 @@ namespace MIP_NDP_Tests
         [TestMethod]
         public void TestNDPMinimalFlow()
         {
-           if (nodes.Any(n => n.Demand > 0) && edges.Select(e => designModel.x[e].Value).Sum() <= scopeSettings.ModelElement.Epsilon)
+           if (nodes.Any(n => n.Demand > 0) && edges.Select(e => designModel.x[e].Value).Sum() <= configuration.Epsilon)
             {
                 Assert.Fail();
             }

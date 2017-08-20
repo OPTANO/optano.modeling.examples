@@ -49,10 +49,10 @@ namespace TSP
                             };
 
             // use default settings
-            var scopeSettings = new OptimizationConfigSection();
-            scopeSettings.ModelElement.EnableFullNames = true;
-            scopeSettings.ModelElement.ComputeRemovedVariables = true;
-            using (var scope = new ModelScope(scopeSettings))
+            var config = new Configuration();
+            config.EnableFullNames = true;
+            config.ComputeRemovedVariables = true;
+            using (var scope = new ModelScope(config))
             {
 
                 // create a model, based on given data and the model scope

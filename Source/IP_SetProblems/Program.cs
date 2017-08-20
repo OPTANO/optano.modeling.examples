@@ -53,10 +53,10 @@ namespace SetProblems
             var sets = new List<ISet_E>{subset_1, subset_2, subset_3, subset_4, subset_5};
 
             // use default settings
-            var scopeSettings = new OptimizationConfigSection();
-            scopeSettings.ModelElement.EnableFullNames = true;
-            scopeSettings.ModelElement.ComputeRemovedVariables = true;
-            using (var scope = new ModelScope(scopeSettings))
+            var config = new Configuration();
+            config.EnableFullNames = true;
+            config.ComputeRemovedVariables = true;
+            using (var scope = new ModelScope(config))
             {
 
                 // create a model, based on given data and the model scope

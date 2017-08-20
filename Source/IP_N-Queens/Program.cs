@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace QueensProblem
 {
-    using System.Configuration;
-
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
@@ -31,10 +29,10 @@ namespace QueensProblem
             int dimension = 8;
 
             // use default settings
-            var scopeSettings = new OptimizationConfigSection();
-            scopeSettings.ModelElement.EnableFullNames = true;
-            scopeSettings.ModelElement.ComputeRemovedVariables = true;
-            using (var scope = new ModelScope(scopeSettings))
+            var config = new Configuration();
+            config.EnableFullNames = true;
+            config.ComputeRemovedVariables = true;
+            using (var scope = new ModelScope(config))
             {
 
                 // create a model, based on given data and the model scope

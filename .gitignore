@@ -250,3 +250,25 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/Source/MIP_WLP/MipCL131WrapperCpp.dll
+/Source/MIP_VRP/MipCL131WrapperCpp.dll
+/Source/MIP_TSP/MipCL131WrapperCpp.dll
+/Source/MIP_NDP_Tests/MipCL131WrapperCpp.dll
+/Source/MIP_NDP/MipCL131WrapperCpp.dll
+/Source/MIP_JobSchedule/MipCL131WrapperCpp.dll
+/Source/MIP_CLSP/MipCL131WrapperCpp.dll
+/Source/IP_Sudoku/MipCL131WrapperCpp.dll
+/Source/IP_SetProblems/MipCL131WrapperCpp.dll
+/Source/IP_N-Queens/MipCL131WrapperCpp.dll
+/Source/IP_Knapsack/MipCL131WrapperCpp.dll
+/Source/IP_Knapsack/MipCL140WrapperCpp.dll
+/Source/IP_N-Queens/MipCL140WrapperCpp.dll
+/Source/IP_SetProblems/MipCL140WrapperCpp.dll
+/Source/IP_Sudoku/MipCL140WrapperCpp.dll
+/Source/MIP_CLSP/MipCL140WrapperCpp.dll
+/Source/MIP_JobSchedule/MipCL140WrapperCpp.dll
+/Source/MIP_NDP/MipCL140WrapperCpp.dll
+/Source/MIP_NDP_Tests/MipCL140WrapperCpp.dll
+/Source/MIP_TSP/MipCL140WrapperCpp.dll
+/Source/MIP_VRP/MipCL140WrapperCpp.dll
+/Source/MIP_WLP/MipCL140WrapperCpp.dll

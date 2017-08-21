@@ -11,7 +11,7 @@ namespace VRP
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi702;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
 
     /// <summary>
     /// Demo program solving a vehicle routing problem

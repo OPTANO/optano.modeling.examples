@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 
 namespace TSP
 {
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Enums;
-    using OPTANO.Modeling.Optimization.Operators;
 
     /// <summary>
     /// A traveling salesman model
@@ -39,10 +36,22 @@ namespace TSP
                 this.Model,
                 this.Edges,
                 "y",
-                edge => new StringBuilder($"{edge.FromNode} to node {edge.ToNode} with distance {edge.Distance}"),
+                edge => new StringBuilder($"{edge}"),
                 edge => 0, // edge is not used
                 edge => 1, // edge is used in the route
                 VariableType.Binary); // indicates whether the edge is used "1" or not "0"
+
+
+            // Edge-activation Variables
+            this.z = new VariableCollection<INode>(
+                this.Model,
+                this.Nodes,
+                "z",
+                node => new StringBuilder($"{node.Name} "),
+                node => 0, // edge is not used
+                node => this.Nodes.Count + 1, // edge is used in the route
+                VariableType.Integer); // indicates whether the edge is used "1" or not "0"
+
 
             // leave the starting node exactly once
             this.Model.AddConstraint(
@@ -73,10 +82,21 @@ namespace TSP
 
             // To eliminate Sub-tours in our TSP we need to add Sub tour elimination constraints
 
-            this.Model.AddConstraint(
-                Expression.Sum(this.Edges.Where(edge => edge.FromNode.IsStartingNode == false && edge.ToNode.IsStartingNode == false).Select(edge => this.y[edge]))
-                <= this.Nodes.Count()-1,
-                $"Sub tour elimination constraints");
+            // Iterate each Node as starting node
+            foreach (var nodeI in this.Nodes.Where(node => !node.IsStartingNode))
+            {
+                // take all nodes, which can be travled to from nodeI
+                foreach (var edge in this.Edges.Where(e => e.FromNode == nodeI))
+                {
+                    var nodeJ = edge.ToNode;
+                    this.Model.AddConstraint(
+                        z[nodeI] - z[nodeJ] + (this.Nodes.Count) * y[edge] <= this.Nodes.Count - 1, 
+                        string.Format("Subtour Elimination for {0} {1}", nodeI.Name, nodeJ.Name)
+                        );
+                }
+            }
+
+          
 
             // Add the objective:
             // Sum of the distances between all used edges
@@ -108,5 +128,10 @@ namespace TSP
         /// Gets the Collection of all edge activation variables
         /// </summary>
         public VariableCollection<IEdge> y { get; }
+
+        /// <summary>
+        /// Gets the collection of all node tour position variables
+        /// </summary>
+        public VariableCollection<INode> z { get; }
     }
 }

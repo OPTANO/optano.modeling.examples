@@ -70,7 +70,7 @@ namespace VRP
 
             // use default settings
             var config = new Configuration();
-            config.EnableFullNames = true;
+            config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {

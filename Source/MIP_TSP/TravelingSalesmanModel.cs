@@ -91,7 +91,7 @@ namespace TSP
                     var nodeJ = edge.ToNode;
                     this.Model.AddConstraint(
                         z[nodeI] - z[nodeJ] + (this.Nodes.Count) * y[edge] <= this.Nodes.Count - 1, 
-                        string.Format("Subtour Elimination for {0} {1}", nodeI.Name, nodeJ.Name)
+                        string.Format("Subtour Elemination for {0} {1}", nodeI.Name, nodeJ.Name)
                         );
                 }
             }

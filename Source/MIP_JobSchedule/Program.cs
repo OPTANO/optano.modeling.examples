@@ -117,7 +117,7 @@ namespace JobScheduling
             jobs.ForEach(job => job.Tasks.AddRange(tasks.Where(task => task.Job == job).OrderBy(task => task.StepNumber)));
 
             var config = new Configuration();
-            config.EnableFullNames = true;
+            config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {

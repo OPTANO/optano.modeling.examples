@@ -3,6 +3,18 @@ This repository shows examples for OPTANO.Modeling.
 
 Find a description of the examples here: http://docs.optano.com/modeling/current/userDoc/model_examples/advanced_introduction.html
 
+
+## How to start
+
+1. Download the code from this repository
+1. Open the AdvancedModels.sln file with [Visual Studio 2017 Community](https://www.visualstudio.com/de/thank-you-downloading-visual-studio/?sku=Community&rel=15) or [Visual Studio Code](https://code.visualstudio.com/Download)
+1. Run the following command in the packet manager window to restore the packages and run their install scripts
+```
+    Update-Package -Reinstall -FileConflictAction Overwrite
+```
+1. Build and Run the solution
+
+
 ## Mixed Integer Linear Problems
 
 Exemplary implementations* of some of the most common Mixed Integer Problems:

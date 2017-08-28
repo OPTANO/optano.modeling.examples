@@ -1,5 +1,4 @@
-﻿using NDP;
-
+﻿
 namespace TSP
 {
     public interface IEdge

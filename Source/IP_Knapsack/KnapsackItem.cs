@@ -9,27 +9,20 @@ namespace Knapsack
     /// <summary>
     /// creates an item for the Knapsack Problem
     /// </summary>
-    public class KnapsackItem : IKnapsackItem
+    public class KnapsackItem
     {
-
-        public KnapsackItem (string name, double weight, double value)
-        {
-            this.Name = name;
-            this.Weight = weight;
-            this.Value = value;
-        }
         /// <summary>
         /// the weight of the item
         /// </summary>
-        public double Weight { get; }
+        public double Weight { get; set; }
 
         /// <summary>
         /// the value of the item
         /// </summary>
-        public double Value { get; }
+        public double Value { get; set; }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public override string ToString() => this.Name;
+        public override string ToString() => Name;
     }
 }

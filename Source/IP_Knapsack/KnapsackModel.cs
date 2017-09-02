@@ -26,14 +26,14 @@ namespace Knapsack
         /// <param name="maxWeight">
         /// The maximum weight of all items taken
         /// </param>
-        public KnapsackModel(List<IKnapsackItem> items, double maxWeight)
+        public KnapsackModel(IEnumerable<KnapsackItem> items, double maxWeight)
         {
             this.Items = items;
             this.MaxWeight = maxWeight;
             this.Model = new Model();
 
             // Choose Item Variable
-            this.y = new VariableCollection<IKnapsackItem>(
+            this.y = new VariableCollection<KnapsackItem>(
                this.Model,
                this.Items,
                "y", 
@@ -70,7 +70,7 @@ namespace Knapsack
         /// <summary>
         /// Gets the edges of this network
         /// </summary>
-        public List<IKnapsackItem> Items { get; }
+        public IEnumerable<KnapsackItem> Items { get; }
 
         /// <summary>
         /// Maximum weight the knapsack can take
@@ -80,6 +80,6 @@ namespace Knapsack
         /// <summary>
         /// Gets the Collection of all design variables
         /// </summary>
-        public VariableCollection<IKnapsackItem> y { get; }
+        public VariableCollection<KnapsackItem> y { get; }
     }
 }

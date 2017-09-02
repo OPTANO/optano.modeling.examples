@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper;
 
 namespace Knapsack
 {
@@ -26,25 +29,20 @@ namespace Knapsack
         {
 
             // create example Items
-            var items = new List<IKnapsackItem>
-            {
-                new KnapsackItem("Item A",1,8),
-                new KnapsackItem("Item B",3,21),
-                new KnapsackItem("Item C",1.5,17),
-                new KnapsackItem("Item D",2.5,12),
-                new KnapsackItem("Item E",4,13),
-                new KnapsackItem("Item F",2,11),
-                new KnapsackItem("Item G",2,17),
-                new KnapsackItem("Item H",1,9)
-            };
+            var csv = new CsvReader(File.OpenText("knapsackItems.csv"));
+            csv.Configuration.Delimiter = ";";
+            csv.Configuration.CultureInfo = new CultureInfo("en-US");
+            var items = csv.GetRecords<KnapsackItem>().ToList();
 
             // maximum weight of all the items
-            double maxWeight = 10.8;
+            var maxWeight = 10.8;
 
             // use default settings
-            var config = new Configuration();
-            config.NameHandling = NameHandlingStyle.UniqueLongNames;
-            config.ComputeRemovedVariables = true;
+            var config = new Configuration
+            {
+                NameHandling = NameHandlingStyle.UniqueLongNames,
+                ComputeRemovedVariables = true
+            };
             using (var scope = new ModelScope(config))
             {
 
@@ -67,7 +65,7 @@ namespace Knapsack
                 knapsackModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
             }
 
-
+            Console.ReadLine();
         }
     }
 }

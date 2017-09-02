@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper;
 
 namespace CLSP
 {
@@ -26,24 +29,17 @@ namespace CLSP
         {
             // create time steps with their "name", demand, setup cost,
             // production cost per unit, inventory cost per unit
-            ITimestep one =   new Timestep(1, 0, 90, 10, 10, 20);
-            ITimestep two =   new Timestep(2, 10, 20, 10, 20, 20);
-            ITimestep three = new Timestep(3, 25, 20, 30, 30, 30);
-            ITimestep four =  new Timestep(4, 15, 20, 20, 40, 20);
-            ITimestep five =  new Timestep(5, 10, 20, 30, 30, 25);
-            ITimestep six =   new Timestep(6, 5, 20, 40, 20, 20);
-            ITimestep seven = new Timestep(7, 50, 5, 20, 30, 15);
-            ITimestep eight = new Timestep(8, 10, 50, 20, 30, 15);
-
-            var timesteps = new List<ITimestep> { one, two, three, four, five,
-                                                  six, seven, eight };
-
-
+            var csv = new CsvReader(File.OpenText("timesteps.csv"));
+            csv.Configuration.Delimiter = ";";
+            csv.Configuration.CultureInfo = new CultureInfo("en-US");
+            var timesteps = csv.GetRecords<Timestep>();
 
             // use default settings
-            var config = new Configuration();
-            config.NameHandling = NameHandlingStyle.UniqueLongNames;
-            config.ComputeRemovedVariables = true;
+            var config = new Configuration
+            {
+                NameHandling = NameHandlingStyle.UniqueLongNames,
+                ComputeRemovedVariables = true
+            };
             using (var scope = new ModelScope(config))
             {
 
@@ -68,7 +64,7 @@ namespace CLSP
                 clspModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
             }
 
-
+            Console.ReadLine();
         }
     }
 }

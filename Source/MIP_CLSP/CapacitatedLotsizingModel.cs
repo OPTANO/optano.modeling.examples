@@ -24,15 +24,15 @@ namespace CLSP
         /// <param name="timesteps">
         /// The time steps of the problem
         /// </param>
-        public CapacitatedLotsizingModel(List<ITimestep> timesteps)
+        public CapacitatedLotsizingModel(IEnumerable<Timestep> timesteps)
         {
-            this.Timesteps = timesteps;
+            this.Timesteps = timesteps.ToList();
          
             this.Model = new Model();
                
 
             // Binary production variables
-            this.y = new VariableCollection<ITimestep>(
+            this.y = new VariableCollection<Timestep>(
                 this.Model,
                 this.Timesteps,
                 "y",
@@ -42,7 +42,7 @@ namespace CLSP
                 VariableType.Binary);
 
             // Continuous production variables
-            this.x = new VariableCollection<ITimestep>(
+            this.x = new VariableCollection<Timestep>(
                 this.Model,
                 this.Timesteps,
                 "x",
@@ -56,7 +56,7 @@ namespace CLSP
             var bigM = this.Timesteps.Max(timestep => timestep.Demand);
 
             // Continuous inventory variables
-            this.s = new VariableCollection<ITimestep>(
+            this.s = new VariableCollection<Timestep>(
                 this.Model,
                 this.Timesteps,
                 "s",
@@ -141,21 +141,21 @@ namespace CLSP
         /// <summary>
         /// Gets the time steps of this network
         /// </summary>
-        public List<ITimestep> Timesteps { get; }
+        public List<Timestep> Timesteps { get; }
 
         /// <summary>
         /// Gets the Collection of all binary production variables
         /// </summary>
-        public VariableCollection<ITimestep> y { get; }
+        public VariableCollection<Timestep> y { get; }
 
         /// <summary>
         /// Gets the Collection of all continuous production variables
         /// </summary>
-        public VariableCollection<ITimestep> x { get; }
+        public VariableCollection<Timestep> x { get; }
 
         /// <summary>
         /// Gets the Collection of all inventory variables
         /// </summary>
-        public VariableCollection<ITimestep> s { get; }
+        public VariableCollection<Timestep> s { get; }
     }
 }

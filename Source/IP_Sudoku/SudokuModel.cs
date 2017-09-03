@@ -41,7 +41,7 @@ namespace Sudoku
                             this.Size,
                             this.Size,
                             "Value",
-                            (col, row, number) => new StringBuilder().AppendFormat($"col{col}, row{row}: {number}"),
+                            (col, row, number) => $"col{col}, row{row}: {number}",
                             (col, row, number) => 0,
                             (col, row, number) => 1,
                             VariableType.Binary);

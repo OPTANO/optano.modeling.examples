@@ -1,42 +1,36 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CsvHelper;
+using Knapsack;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OPTANO.Modeling.Common;
+using OPTANO.Modeling.Optimization;
+using OPTANO.Modeling.Optimization.Configuration;
+using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
 
-namespace Knapsack
+namespace IP_Knapsack_Tests
 {
-    using OPTANO.Modeling.Common;
-    using OPTANO.Modeling.Optimization;
-    using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
-
-    /// <summary>
-    /// Demo program solving a Knapsack Problem
-    /// </summary>
-    class Program
+    [TestClass]
+    public class KnapsackModelTests
     {
-        /// <summary>
-        /// The main method
-        /// </summary>
-        /// <param name="args">
-        /// no arguments required
-        /// </param>
-        static void Main(string[] args)
-        {
+        private List<KnapsackItem> _items;
+        private double _maxWeight;
 
+        [TestInitialize]
+        public void Initialize()
+        {
             // create example Items
             var csv = new CsvReader(File.OpenText("knapsackItems.csv"));
             csv.Configuration.Delimiter = ";";
             csv.Configuration.CultureInfo = new CultureInfo("en-US");
             csv.Configuration.RegisterClassMap<KnapsackItemMap>();
-            var items = csv.GetRecords<KnapsackItem>().ToList();
+            _items = csv.GetRecords<KnapsackItem>().ToList();
 
             // maximum weight of all the items
-            var maxWeight = 10.8;
+            _maxWeight = 10.8;
 
             // use default settings
             var config = new Configuration
@@ -48,7 +42,7 @@ namespace Knapsack
             {
 
                 // create a model, based on given data and the model scope
-                var knapsackModel = new KnapsackModel(items, maxWeight);
+                var knapsackModel = new KnapsackModel(_items, _maxWeight);
 
                 // Get a solver instance, change your solver
                 var solver = new GurobiSolver();
@@ -58,15 +52,17 @@ namespace Knapsack
 
                 // import the results back into the model 
                 knapsackModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
-
-                // print objective and variable decisions
-                Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                knapsackModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
-
-                knapsackModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                foreach (var knapsackItem in _items)
+                {
+                    knapsackItem.IsPacked = Math.Abs(knapsackModel.y[knapsackItem].Value - 1) < scope.EPSILON;
+                }
             }
+        }
 
-            Console.ReadLine();
+        [TestMethod]
+        public void WeightConstraintTest()
+        {
+            Assert.IsTrue(_items.Where(item => item.IsPacked).Sum(item => item.Weight) <= _maxWeight);
         }
     }
 }

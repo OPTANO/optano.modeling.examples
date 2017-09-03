@@ -41,7 +41,7 @@ namespace NDP
                 // the name of the variable collection
                 "x",
                 // Label-Generator
-                edge => new StringBuilder($"Flow {edge.FromNode} to {edge.ToNode}"),
+                edge => $"Flow {edge.FromNode} to {edge.ToNode}",
                 // Lower Bound, 0 is default 
                 edge => 0,
                 // if Capacity is set, use as upper bound (otherwise double.PositiveInfinity for unbounded)
@@ -54,7 +54,7 @@ namespace NDP
                this.Model, // register this.Model
                this.Edges, // Index is just the edge (might have time period in a more advanced problem)
                "y", // the name of the variable collection
-               edge => new StringBuilder($"Design {edge.FromNode} to {edge.ToNode}"), // Label-Generator
+               edge => $"Design {edge.FromNode} to {edge.ToNode}", // Label-Generator
                edge => 0, // Lower Bound, 0 is default 
                edge => (edge.Capacity ?? double.PositiveInfinity) > 0 ? 1d : 0d, // if capacity is set and greater than 0, set 1 as bound for binary, otherwise 0. e
                VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.

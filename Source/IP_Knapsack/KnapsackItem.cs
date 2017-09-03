@@ -22,6 +22,7 @@ namespace Knapsack
         public double Value { get; set; }
 
         public string Name { get; set; }
+        public bool IsPacked { get; set; }
 
         public override string ToString() => Name;
     }

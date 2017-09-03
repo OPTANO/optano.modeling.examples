@@ -38,7 +38,7 @@ namespace SetProblems
                this.Model, 
                this.Sets, 
                "y", 
-               item => new StringBuilder($"Status of set {item.Name}"),
+               item => $"Status of set {item.Name}",
                item => 0, 
                item => 1,
                VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.

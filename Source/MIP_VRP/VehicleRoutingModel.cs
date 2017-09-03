@@ -45,7 +45,7 @@ namespace VRP
                 this.Edges,                              // variable: x_(edge,time)
                 this.Vehicles,
                 "x",
-                (edge, k) => new StringBuilder($"Edge from {edge.FromNode} to {edge.ToNode} with vehicle {k}"),
+                (edge, k) => $"Edge from {edge.FromNode} to {edge.ToNode} with vehicle {k}",
                 (IEdge edge, int k) => 0, // edge is not used by vehicle k
                 (IEdge edge, int k) => 1, // edge is used in the route by vehicle k
                 VariableType.Binary); // indicates whether the edge is used "1" or not "0"
@@ -56,7 +56,7 @@ namespace VRP
                 this.Nodes,     
                 this.Vehicles,
                 "y",
-                (INode node, int k) => new StringBuilder($"Customer {node.Name} is served by vehicle {k}"),
+                (INode node, int k) => $"Customer {node.Name} is served by vehicle {k}",
                 (INode node, int k) => 0, // vehicle k does not serve customer k
                 (INode node, int k) => 1, // vehicle k does serve customer 
                 VariableType.Binary); // indicates if the customer is served by vehicle k.

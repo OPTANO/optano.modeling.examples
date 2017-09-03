@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace JobScheduling
 {
-    using System.Data.SqlClient;
     using System.Drawing;
     using System.IO;
 

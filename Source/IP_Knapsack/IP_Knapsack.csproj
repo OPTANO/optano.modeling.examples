@@ -4,11 +4,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="2.16.3" />
-    <PackageReference Include="OPTANO.Modeling" Version="2.0.0.278-alpha02" />
-    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="7.5.1.9" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <PackageReference Include="CsvHelper" Version="2.16.3" />
+    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="7.5.1.10" />
   </ItemGroup>
 </Project>

@@ -39,7 +39,7 @@ namespace WLP
                 this.Model,
                 this.Edges,
                 "x", // the name of the variable collection
-                edge => new StringBuilder($"Supply flowing from {edge.FromNode} to {edge.ToNode}"),
+                edge => $"Supply flowing from {edge.FromNode} to {edge.ToNode}",
                 edge => 0, 
                 edge => edge.Capacity,
                 VariableType.Continuous);
@@ -49,7 +49,7 @@ namespace WLP
                this.Model, 
                this.Nodes, 
                "y",
-               node => new StringBuilder($"{node.Name} status:"),
+               node => $"{node.Name} status:",
                node => 0, // Warehouse is not used
                node => 1, // Warehouse is used
                VariableType.Binary); 

@@ -36,7 +36,7 @@ namespace CLSP
                 this.Model,
                 this.Timesteps,
                 "y",
-                timestep => new StringBuilder($"Are we producing in time step {timestep.Name}?"),
+                timestep => $"Are we producing in time step {timestep.Name}?",
                 timestep => 0,
                 timestep => 1,
                 VariableType.Binary);
@@ -46,7 +46,7 @@ namespace CLSP
                 this.Model,
                 this.Timesteps,
                 "x",
-                timestep => new StringBuilder($"Production amount in time step {timestep.Name}"),
+                timestep => $"Production amount in time step {timestep.Name}",
                 timestep => 0,
                 timestep => timestep.Demand ?? double.PositiveInfinity,
                 VariableType.Continuous);
@@ -60,7 +60,7 @@ namespace CLSP
                 this.Model,
                 this.Timesteps,
                 "s",
-                timestep => new StringBuilder($"Inventory amount in time step {timestep.Name}"),
+                timestep => $"Inventory amount in time step {timestep.Name}",
                 timestep => 0,
                 timestep => (double)bigM, // take bigM here as an upper bound
                 VariableType.Continuous);

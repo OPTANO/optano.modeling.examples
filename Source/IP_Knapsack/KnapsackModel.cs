@@ -37,7 +37,7 @@ namespace Knapsack
                this.Model,
                this.Items,
                "y", 
-               item => new StringBuilder($"Status of item {item.Name}"),
+               item => $"Status of item {item.Name}",
                item => 0,
                item => 1,
                VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.

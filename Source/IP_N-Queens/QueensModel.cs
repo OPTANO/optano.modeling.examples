@@ -38,7 +38,7 @@ namespace QueensProblem
                this.Rows = Enumerable.Range(0, this.Dimension),
                this.Columns = Enumerable.Range(0, this.Dimension),
                "y", 
-               (r,c) => new StringBuilder($"Is there a queen at position {r},{c}"),
+               (r,c) => $"Is there a queen at position {r},{c}",
                (r,c) => 0,
                (r,c) => 1,
                VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.

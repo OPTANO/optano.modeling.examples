@@ -36,7 +36,7 @@ namespace TSP
                 this.Model,
                 this.Edges,
                 "y",
-                edge => new StringBuilder($"{edge}"),
+                edge => $"{edge}",
                 edge => 0, // edge is not used
                 edge => 1, // edge is used in the route
                 VariableType.Binary); // indicates whether the edge is used "1" or not "0"
@@ -47,7 +47,7 @@ namespace TSP
                 this.Model,
                 this.Nodes,
                 "z",
-                node => new StringBuilder($"{node.Name} "),
+                node => $"{node.Name} ",
                 node => 0, // edge is not used
                 node => this.Nodes.Count + 1, // edge is used in the route
                 VariableType.Integer); // indicates whether the edge is used "1" or not "0"

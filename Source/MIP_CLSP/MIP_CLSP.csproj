@@ -8,6 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="2.16.3" />
-    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="7.5.1.10" />
+    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="7.5.1.11" />
+    <PackageReference Include="OxyPlot.Core" Version="2.0.0-unstable1013" />
   </ItemGroup>
 </Project>

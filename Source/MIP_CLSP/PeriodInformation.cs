@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CLSP
+namespace MIP_CLSP
 {
     /// <summary>
     /// A time step of the Capacitated Lot-Sizing Model
     /// </summary>
-    public class Timestep
+    public class PeriodInformation
     {
         /// <summary>
         /// Gets the name of this time step
         /// </summary>
-        public int Name { get; set; }
+        public int Period { get; set; }
 
         /// <summary>
         /// Gets the demand in this time step
         /// </summary>
-        public double? Demand { get; set; }
+        public double Demand { get; set; }
 
         /// <summary>
         /// Gets the cost to setup the machine in this time step
@@ -47,7 +43,7 @@ namespace CLSP
         /// <returns>
         /// The name of this time step (<see cref="string"/>).
         /// </returns>
-        public override string ToString() => Convert.ToString(Name);
+        public override string ToString() => Convert.ToString(Period);
 
     }
 }

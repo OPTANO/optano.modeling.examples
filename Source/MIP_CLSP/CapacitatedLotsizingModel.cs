@@ -29,7 +29,7 @@ namespace MIP_CLSP
                 this.Model,
                 this.PeriodInformation,
                 "y",
-                timestep => $"y_{timestep.Period}",
+                timestep => $"machines_active_in_period_{timestep.Period}",
                 timestep => 0,
                 timestep => 1,
                 VariableType.Binary);

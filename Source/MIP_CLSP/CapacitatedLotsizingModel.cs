@@ -24,7 +24,7 @@ namespace MIP_CLSP
             this.PeriodInformation = timesteps.ToList();
             this.Model = new Model();
 
-            // Binary production variables
+            // Binary indicator variables
             this.y = new VariableCollection<PeriodInformation>(
                 this.Model,
                 this.PeriodInformation,

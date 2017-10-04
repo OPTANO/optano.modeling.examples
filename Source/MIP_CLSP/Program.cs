@@ -6,6 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
+using MIP_CLSP;
+using OPTANO.Modeling.Optimization.Solver;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 
 namespace CLSP
 {
@@ -32,29 +37,31 @@ namespace CLSP
             var csv = new CsvReader(File.OpenText("timesteps.csv"));
             csv.Configuration.Delimiter = ";";
             csv.Configuration.CultureInfo = new CultureInfo("en-US");
-            var timesteps = csv.GetRecords<Timestep>();
+            var periodInformation = csv.GetRecords<PeriodInformation>();
 
             // use default settings
             var config = new Configuration
             {
-                NameHandling = NameHandlingStyle.UniqueLongNames,
+                NameHandling = NameHandlingStyle.Manual,
                 ComputeRemovedVariables = true
             };
             using (var scope = new ModelScope(config))
             {
 
                 // create a model, based on given data and the model scope
-                var clspModel = new CapacitatedLotsizingModel(timesteps);
-                
+                var clspModel = new CapacitatedLotsizingModel(periodInformation);
+
+                var solverCfg = new GurobiSolverConfiguration()
+                {
+                    ModelOutputFile = new FileInfo("clsp.lp"),
+                };
+
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
+                var solver = new GurobiSolver(solverCfg);
 
                 // solve the model
                 var solution = solver.Solve(clspModel.Model);
                 
-                // import the results back into the model 
-                clspModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
-
                 // print objective and variable decisions
                 Console.WriteLine($"{solution.ObjectiveValues.Single()}");
                 clspModel.y.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
@@ -62,6 +69,8 @@ namespace CLSP
                 clspModel.s.Variables.ForEach(s => Console.WriteLine($"{s.ToString().PadRight(36)}: {s.Value}"));
 
                 clspModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+
+                PlottingUtils.CreateAndExportLotSizingPlot(clspModel);
             }
 
             Console.ReadLine();

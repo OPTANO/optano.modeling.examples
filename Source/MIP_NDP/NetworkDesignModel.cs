@@ -47,7 +47,7 @@ namespace NDP
                 // if Capacity is set, use as upper bound (otherwise double.PositiveInfinity for unbounded)
                 edge => edge.Capacity ?? double.PositiveInfinity,
                 // Continuous Variable (is default)
-                VariableType.Continuous); 
+                edge => VariableType.Continuous); 
 
             // Design-Variables
             this.y = new VariableCollection<IEdge>(
@@ -57,7 +57,7 @@ namespace NDP
                edge => $"Design {edge.FromNode} to {edge.ToNode}", // Label-Generator
                edge => 0, // Lower Bound, 0 is default 
                edge => (edge.Capacity ?? double.PositiveInfinity) > 0 ? 1d : 0d, // if capacity is set and greater than 0, set 1 as bound for binary, otherwise 0. e
-               VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
+               edge => VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
 
             // Create Constraints
 

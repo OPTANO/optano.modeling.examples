@@ -39,7 +39,7 @@ namespace CLSP
                 timestep => $"Are we producing in time step {timestep.Name}?",
                 timestep => 0,
                 timestep => 1,
-                VariableType.Binary);
+                timestep => VariableType.Binary);
 
             // Continuous production variables
             this.x = new VariableCollection<Timestep>(
@@ -49,7 +49,7 @@ namespace CLSP
                 timestep => $"Production amount in time step {timestep.Name}",
                 timestep => 0,
                 timestep => timestep.Demand ?? double.PositiveInfinity,
-                VariableType.Continuous);
+                timestelp => VariableType.Continuous);
 
             // the maximum production volume per time step is 
             // the largest demand of all time steps
@@ -63,7 +63,7 @@ namespace CLSP
                 timestep => $"Inventory amount in time step {timestep.Name}",
                 timestep => 0,
                 timestep => (double)bigM, // take bigM here as an upper bound
-                VariableType.Continuous);
+                timestep => VariableType.Continuous);
 
             // Create constraints
 

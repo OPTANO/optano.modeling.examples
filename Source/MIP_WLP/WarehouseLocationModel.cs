@@ -42,7 +42,7 @@ namespace WLP
                 edge => $"Supply flowing from {edge.FromNode} to {edge.ToNode}",
                 edge => 0, 
                 edge => edge.Capacity,
-                VariableType.Continuous);
+                edge => VariableType.Continuous);
 
             // Depot activation variable
             this.y = new VariableCollection<INode>(
@@ -52,7 +52,7 @@ namespace WLP
                node => $"{node.Name} status:",
                node => 0, // Warehouse is not used
                node => 1, // Warehouse is used
-               VariableType.Binary); 
+               node => VariableType.Binary); 
                 
             // Create Constraints
 

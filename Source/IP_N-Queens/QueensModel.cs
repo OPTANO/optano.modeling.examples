@@ -41,7 +41,7 @@ namespace QueensProblem
                (r,c) => $"Is there a queen at position {r},{c}",
                (r,c) => 0,
                (r,c) => 1,
-               VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
+               (r,c) => VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
 
             // create a tuple based on rows and columns (row, column)
             var tupleRowsColumns = (from row in this.Rows

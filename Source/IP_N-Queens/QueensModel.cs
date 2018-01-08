@@ -41,7 +41,7 @@ namespace QueensProblem
                (r,c) => $"Is there a queen at position {r},{c}",
                (r,c) => 0,
                (r,c) => 1,
-               VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
+               (r,c) => VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
 
             // create a tuple based on rows and columns (row, column)
             var tupleRowsColumns = (from row in this.Rows
@@ -84,11 +84,15 @@ namespace QueensProblem
             // no queen diagonal to another (left)
             for (int c = (-1) * this.Dimension + 1; c < this.Dimension; c++)
             {
-                this.Model.AddConstraint(
-                    Expression.Sum(Enumerable.Range(0, this.Dimension).Where(cnt => c - cnt >= 0).Select(cnt => y[cnt, (c-cnt)]))
-                    <= 1,
+                var elems = Enumerable.Range(0, this.Dimension).Where(cnt => c - cnt >= 0).ToList();
+                if (elems.Count > 0)
+                {
+                    this.Model.AddConstraint(
+                            Expression.Sum(elems.Select(cnt => y[cnt, (c - cnt)]))
+                        <= 1,
                     $"diagonal left {c}"
-                    );
+                        );
+                }
             }
 
             // Add the objective

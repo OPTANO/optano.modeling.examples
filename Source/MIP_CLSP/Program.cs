@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 using CsvHelper;
 using MIP_CLSP;
 using OPTANO.Modeling.Optimization.Solver;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 
 namespace CLSP
 {
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi752;
 
     /// <summary>
     /// Demo program solving a Capacitated Lot-Sizing Problem
@@ -66,6 +69,8 @@ namespace CLSP
                 clspModel.s.Variables.ForEach(s => Console.WriteLine($"{s.ToString().PadRight(36)}: {s.Value}"));
 
                 clspModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+
+                PlottingUtils.CreateAndExportLotSizingPlot(clspModel);
             }
 
             Console.ReadLine();

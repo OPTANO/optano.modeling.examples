@@ -39,7 +39,7 @@ namespace TSP
                 edge => $"{edge}",
                 edge => 0, // edge is not used
                 edge => 1, // edge is used in the route
-                VariableType.Binary); // indicates whether the edge is used "1" or not "0"
+                edge => VariableType.Binary); // indicates whether the edge is used "1" or not "0"
 
 
             // Edge-activation Variables
@@ -50,7 +50,7 @@ namespace TSP
                 node => $"{node.Name} ",
                 node => 0, // edge is not used
                 node => this.Nodes.Count + 1, // edge is used in the route
-                VariableType.Integer); // indicates whether the edge is used "1" or not "0"
+                node => VariableType.Integer); // indicates whether the edge is used "1" or not "0"
 
 
             // leave the starting node exactly once

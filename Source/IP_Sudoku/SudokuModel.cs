@@ -44,7 +44,7 @@ namespace Sudoku
                             (col, row, number) => $"col{col}, row{row}: {number}",
                             (col, row, number) => 0,
                             (col, row, number) => 1,
-                            VariableType.Binary);
+                            (col, row, number) => VariableType.Binary);
 
             // Create Constraints
 

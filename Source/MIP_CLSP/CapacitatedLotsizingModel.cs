@@ -24,15 +24,15 @@ namespace MIP_CLSP
             this.PeriodInformation = timesteps.ToList();
             this.Model = new Model();
 
-            // Binary production variables
+            // Binary indicator variables
             this.y = new VariableCollection<PeriodInformation>(
                 this.Model,
                 this.PeriodInformation,
                 "y",
-                timestep => $"y_{timestep.Period}",
+                timestep => $"machines_active_in_period_{timestep.Period}",
                 timestep => 0,
                 timestep => 1,
-                VariableType.Binary);
+                timestep => VariableType.Binary);
 
             // Continuous production variables
             this.x = new VariableCollection<PeriodInformation>(
@@ -42,7 +42,7 @@ namespace MIP_CLSP
                 timestep => $"produced_amount_period_{timestep.Period}",
                 timestep => 0,
                 timestep => timestep.Capacity,
-                VariableType.Continuous);
+                timestep => VariableType.Continuous);
             
             // Continuous inventory variables
             this.s = new VariableCollection<PeriodInformation>(
@@ -55,7 +55,7 @@ namespace MIP_CLSP
                 // Since we need to fulfill demands from 'some' previous production, 
                 // the maximum available stock amount can be reduced by the occuring demands.
                 timestep => this.ComputeStorageVariableUpperBound(timestep),
-                VariableType.Continuous);
+                timestep => VariableType.Continuous);
 
             // Create constraints
 

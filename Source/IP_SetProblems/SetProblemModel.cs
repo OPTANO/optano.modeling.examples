@@ -41,7 +41,7 @@ namespace SetProblems
                item => $"Status of set {item.Name}",
                item => 0, 
                item => 1,
-               VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
+               item => VariableType.Binary); // it is a binary! only bounds of {0;1} are valid.
 
             // Create Constraints
 

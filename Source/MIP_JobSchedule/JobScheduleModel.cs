@@ -57,7 +57,7 @@ namespace JobScheduling
                 (t, m, r) => $"StartTime_t{t}_m{m}_r{r}",
                 (t, m, r) => 0,
                 (t, m, r) => double.PositiveInfinity,
-                VariableType.Continuous,
+                (t, m, r) => VariableType.Continuous,
                 null);
 
             // assignment of the tasks to the machines
@@ -70,7 +70,7 @@ namespace JobScheduling
                 (t, m, r) => $"Assignment_t{t}_m{m}_r{r}",
                 (t, m, r) => 0,
                 (t, m, r) => 1,
-                VariableType.Binary,
+                (t, m, r) => VariableType.Binary,
                 (t, m, r) => t.StepNumber);
 
             // delay of the jobs
@@ -81,7 +81,7 @@ namespace JobScheduling
                 (j) => $"Delay_j{j}",
                 (j) => 0,
                 (j) => double.PositiveInfinity,
-                VariableType.Continuous,
+                (j) => VariableType.Continuous,
                 null);
 
             // Create Constraints

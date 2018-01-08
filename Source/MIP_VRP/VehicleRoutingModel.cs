@@ -46,9 +46,9 @@ namespace VRP
                 this.Vehicles,
                 "x",
                 (edge, k) => $"Edge from {edge.FromNode} to {edge.ToNode} with vehicle {k}",
-                (IEdge edge, int k) => 0, // edge is not used by vehicle k
-                (IEdge edge, int k) => 1, // edge is used in the route by vehicle k
-                VariableType.Binary); // indicates whether the edge is used "1" or not "0"
+                (edge, k) => 0, // edge is not used by vehicle k
+                (edge, k) => 1, // edge is used in the route by vehicle k
+                (edge, k) => VariableType.Binary); // indicates whether the edge is used "1" or not "0"
 
             // Indicates whether Vehicle k is assigned to this customer
             this.y = new VariableCollection<INode, int>( // same as above but this time
@@ -56,10 +56,10 @@ namespace VRP
                 this.Nodes,     
                 this.Vehicles,
                 "y",
-                (INode node, int k) => $"Customer {node.Name} is served by vehicle {k}",
-                (INode node, int k) => 0, // vehicle k does not serve customer k
-                (INode node, int k) => 1, // vehicle k does serve customer 
-                VariableType.Binary); // indicates if the customer is served by vehicle k.
+                (node, k) => $"Customer {node.Name} is served by vehicle {k}",
+                (node, k) => 0, // vehicle k does not serve customer k
+                (node, k) => 1, // vehicle k does serve customer 
+                (node, k) => VariableType.Binary); // indicates if the customer is served by vehicle k.
 
             // we create a tuple (via cross join) based of edges
             // and vehicles to work on our x-variable

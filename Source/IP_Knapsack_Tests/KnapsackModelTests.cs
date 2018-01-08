@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OPTANO.Modeling.Common;
 using OPTANO.Modeling.Optimization;
 using OPTANO.Modeling.Optimization.Configuration;
-using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
+using OPTANO.Modeling.Optimization.Solver.Gurobi752;
 
 namespace IP_Knapsack_Tests
 {

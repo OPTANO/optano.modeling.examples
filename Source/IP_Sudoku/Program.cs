@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OPTANO.Modeling.Optimization.Solver.Gurobi752;
 
 namespace Sudoku
 {
-    using System.Security.Cryptography.X509Certificates;
 
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Enums;
-    using OPTANO.Modeling.Optimization.Solver.Cplex127;
+
 
     /// <summary>
     /// program solving a Sudoku
@@ -57,7 +56,7 @@ namespace Sudoku
                 var sudokuModel = new SudokuModel(size, section, game);
                 
                 // get a solver instance, change your solver
-                var solver = new CplexSolver();
+                var solver = new GurobiSolver();
 
                 // solve the model
                 var solution = solver.Solve(sudokuModel.Model);
@@ -83,6 +82,7 @@ namespace Sudoku
 
 
             }
+            Console.ReadLine();
         }
     }
 }

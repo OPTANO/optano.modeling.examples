@@ -84,11 +84,15 @@ namespace QueensProblem
             // no queen diagonal to another (left)
             for (int c = (-1) * this.Dimension + 1; c < this.Dimension; c++)
             {
-                this.Model.AddConstraint(
-                    Expression.Sum(Enumerable.Range(0, this.Dimension).Where(cnt => c - cnt >= 0).Select(cnt => y[cnt, (c-cnt)]))
-                    <= 1,
+                var elems = Enumerable.Range(0, this.Dimension).Where(cnt => c - cnt >= 0).ToList();
+                if (elems.Count > 0)
+                {
+                    this.Model.AddConstraint(
+                            Expression.Sum(elems.Select(cnt => y[cnt, (c - cnt)]))
+                        <= 1,
                     $"diagonal left {c}"
-                    );
+                        );
+                }
             }
 
             // Add the objective

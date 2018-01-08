@@ -11,7 +11,7 @@ namespace SetProblems
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi752;
 
     /// <summary>
     /// Demo program solving Set-problem(s)
@@ -78,7 +78,7 @@ namespace SetProblems
                 setProblemModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
             }
 
-
+            Console.ReadLine();
         }
     }
 }

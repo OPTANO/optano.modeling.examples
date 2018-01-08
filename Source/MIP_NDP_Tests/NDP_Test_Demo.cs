@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using OPTANO.Modeling.Optimization.Configuration;
 using OPTANO.Modeling.Optimization;
-using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
+using OPTANO.Modeling.Optimization.Solver.Gurobi752;
 using OPTANO.Modeling.Common;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

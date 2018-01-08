@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OPTANO.Modeling.Optimization.Solver.Gurobi752;
 
 namespace JobScheduling
 {
@@ -125,9 +126,9 @@ namespace JobScheduling
                 var jobScheduleModel = new JobScheduleModel(jobs, setupTimes, tasks, ranks, machines);
 
                 // Get a solver instance, change your solver
-                CplexSolverConfiguration cplexconfig = new CplexSolverConfiguration();
-                cplexconfig.TimeLimit = 120;
-                var solver = new CplexSolver(cplexconfig);
+                var solverConfig = new GurobiSolverConfiguration();
+                solverConfig.TimeLimit = 120;
+                var solver = new GurobiSolver(solverConfig);
 
                 // solve the model
                 var solution = solver.Solve(jobScheduleModel.Model);
@@ -173,6 +174,7 @@ namespace JobScheduling
                     Console.WriteLine("---");
                 }
             }
+            Console.ReadLine();
         }
     }
 }

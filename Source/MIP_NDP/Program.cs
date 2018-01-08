@@ -9,7 +9,7 @@ namespace NDP
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi75x;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi752;
 
     /// <summary>
     /// Demo program solving a network design problem
@@ -73,7 +73,7 @@ namespace NDP
                 designModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
             }
 
-
+            Console.ReadLine();
         }
     }
 }

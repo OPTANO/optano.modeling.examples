@@ -52,7 +52,7 @@ namespace SetProblems
 
             var sets = new List<ISet_E>{subset_1, subset_2, subset_3, subset_4, subset_5};
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
@@ -63,22 +63,22 @@ namespace SetProblems
                 var setProblemModel = new SetProblemModel(sets, fullSet);
 
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
+                using (var solver = new GurobiSolver())
+                {
+                    // solve the model
+                    var solution = solver.Solve(setProblemModel.Model);
 
-                // solve the model
-                var solution = solver.Solve(setProblemModel.Model);
+                    // import the results back into the model 
+                    setProblemModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
-                // import the results back into the model 
-                setProblemModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+                    // print objective and variable decisions
+                    Console.WriteLine($"{solution.ObjectiveValues.Single()}");
+                    setProblemModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
 
-                // print objective and variable decisions
-                Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                setProblemModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
-
-                setProblemModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    setProblemModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    Console.ReadLine();
+                }
             }
-
-            Console.ReadLine();
         }
     }
 }

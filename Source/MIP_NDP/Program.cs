@@ -43,37 +43,35 @@ namespace NDP
             IEdge six = new Edge(pb, b, 50, 1, 7600);
 
             // assign these edges to a list of IEdges
-            var edges = new List<IEdge>{one, two, three, four, five, six};
+            var edges = new List<IEdge> { one, two, three, four, five, six };
 
-            // use default settings
-
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {
-
                 // create a model, based on given data and the model scope
                 var designModel = new NetworkDesignModel(nodes, edges);
-                
+
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
+                using (var solver = new GurobiSolver())
+                {
+                    // solve the model
+                    var solution = solver.Solve(designModel.Model);
 
-                // solve the model
-                var solution = solver.Solve(designModel.Model);
-                
-                // import the results back into the model 
-                designModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+                    // import the results back into the model 
+                    designModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
-                // print objective and variable decisions
-                Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                designModel.x.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
-                designModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
+                    // print objective and variable decisions
+                    Console.WriteLine($"{solution.ObjectiveValues.Single()}");
+                    designModel.x.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
+                    designModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
 
-                designModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    designModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    Console.ReadLine();
+                }
             }
-
-            Console.ReadLine();
         }
     }
 }

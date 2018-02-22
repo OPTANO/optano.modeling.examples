@@ -112,69 +112,70 @@ namespace JobScheduling
                                        },
                                };
 
-
             // register tasks with jobs
             jobs.ForEach(job => job.Tasks.AddRange(tasks.Where(task => task.Job == job).OrderBy(task => task.StepNumber)));
 
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {
-
                 // create a model, based on given data and the model scope
                 var jobScheduleModel = new JobScheduleModel(jobs, setupTimes, tasks, ranks, machines);
 
                 // Get a solver instance, change your solver
-                var solverConfig = new GurobiSolverConfiguration();
-                solverConfig.TimeLimit = 120;
-                var solver = new GurobiSolver(solverConfig);
-
-                // solve the model
-                var solution = solver.Solve(jobScheduleModel.Model);
-
-                // print objective and variable decisions
-                Console.WriteLine($"Objective: {solution.ObjectiveValues.Single().Key} {(int)Math.Round(solution.ObjectiveValues.Single().Value)}");
-                Console.WriteLine($"Latest End: {(int)jobScheduleModel.LatestEnd.Value}");
-
-                foreach (var machine in machines)
+                var solverConfig = new GurobiSolverConfiguration { TimeLimit = 120 };
+                using (var solver = new GurobiSolver(solverConfig))
                 {
-                    foreach (var rank in ranks)
-                    {
-                        foreach (var task in machine.SupportedTasks)
-                        {
-                            if ((int)Math.Round(jobScheduleModel.taskMachineAssignment[task, machine, rank].Value) > 0)
-                            {
-                                Console.WriteLine(
-                                    $"Machine {machine}, Rank {rank}: Assigns Task={task}, Start: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value):####}, Duration: {task.Duration:##}, End: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value) + task.Duration:####}");
-                            }
-                        }
-                    }
+                    // solve the model
+                    var solution = solver.Solve(jobScheduleModel.Model);
 
-                    Console.WriteLine("---");
-                }
+                    // print objective and variable decisions
+                    Console.WriteLine(
+                        $"Objective: {solution.ObjectiveValues.Single().Key} {(int)Math.Round(solution.ObjectiveValues.Single().Value)}");
+                    Console.WriteLine($"Latest End: {(int)jobScheduleModel.LatestEnd.Value}");
 
-                foreach (var job in jobs)
-                {
-                    foreach (var task in job.Tasks)
+                    foreach (var machine in machines)
                     {
-                        foreach (var machine in machines.Where(m => m.SupportedTasks.Contains(task)))
+                        foreach (var rank in ranks)
                         {
-                            foreach (var rank in ranks)
+                            foreach (var task in machine.SupportedTasks)
                             {
                                 if ((int)Math.Round(jobScheduleModel.taskMachineAssignment[task, machine, rank].Value) > 0)
                                 {
                                     Console.WriteLine(
-                                        $"Task={task}, Rank {rank}: Assigned Machine {machine}, Start: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value):####}, Duration: {task.Duration:##}, End: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value) + task.Duration:####}");
+                                        $"Machine {machine}, Rank {rank}: Assigns Task={task}, Start: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value):####}, Duration: {task.Duration:##}, End: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value) + task.Duration:####}");
                                 }
                             }
                         }
+
+                        Console.WriteLine("---");
                     }
 
-                    Console.WriteLine("---");
+                    foreach (var job in jobs)
+                    {
+                        foreach (var task in job.Tasks)
+                        {
+                            foreach (var machine in machines.Where(m => m.SupportedTasks.Contains(task)))
+                            {
+                                foreach (var rank in ranks)
+                                {
+                                    if ((int)Math.Round(jobScheduleModel.taskMachineAssignment[task, machine, rank].Value) > 0)
+                                    {
+                                        Console.WriteLine(
+                                            $"Task={task}, Rank {rank}: Assigned Machine {machine}, Start: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value):####}, Duration: {task.Duration:##}, End: {(int)Math.Round(jobScheduleModel.startTime[task, machine, rank].Value) + task.Duration:####}");
+                                    }
+                                }
+                            }
+                        }
+
+                        Console.WriteLine("---");
+                    }
+
+                    Console.ReadLine();
                 }
             }
-            Console.ReadLine();
         }
     }
 }

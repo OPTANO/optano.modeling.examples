@@ -68,13 +68,12 @@ namespace VRP
 
             var capacity = 4000;    // each vehicle has a capacity of 4000 units
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {
-
                 // create a model, based on given data and the modelscope
                 var VRPModel = new VehicleRoutingModel(nodes, edges, vehicles, capacity);
 
@@ -84,12 +83,10 @@ namespace VRP
                     try
                     {
                         // troubleshooting
-
                         solver.Configuration.TimeLimit = 1;
                         (solver.Configuration as GurobiSolverConfiguration).ComputeIIS = true;
 
                         // troubleshooting
-
                         // solve the model
                         var solution = solver.Solve(VRPModel.Model);
                         if (solution.ConflictingSet != null)
@@ -108,11 +105,13 @@ namespace VRP
 
                         VRPModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
                     }
-                    catch (Exception) { }
-                   
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    Console.ReadLine();
                 }
             }
-            Console.ReadLine();
         }
     }
 }

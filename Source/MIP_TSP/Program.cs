@@ -49,33 +49,32 @@ namespace TSP
                                 new Edge(sf, ny, 4100)
                             };
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {
-
                 // create a model, based on given data and the model scope
                 var travelingSalesmanModel = new TravelingSalesmanModel(nodes, edges);
-                
+
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
+                using (var solver = new GurobiSolver())
+                {
+                    // solve the model
+                    var solution = solver.Solve(travelingSalesmanModel.Model);
 
-                // solve the model
-                var solution = solver.Solve(travelingSalesmanModel.Model);
+                    // import the results back into the model 
+                    travelingSalesmanModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
-                // import the results back into the model 
-                travelingSalesmanModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+                    // print objective and variable decisions
+                    Console.WriteLine($"{solution.ObjectiveValues.Single()}");
+                    travelingSalesmanModel.y.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
 
-                // print objective and variable decisions
-                Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                travelingSalesmanModel.y.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
-
-                travelingSalesmanModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    travelingSalesmanModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    Console.ReadLine();
+                }
             }
-
-            Console.ReadLine();
         }
     }
 }

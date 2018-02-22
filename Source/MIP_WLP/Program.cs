@@ -46,35 +46,33 @@ namespace WLP
                                 new Edge(b, mo, 100, 5800)
                             };
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {
-
                 // create a model, based on given data and the model scope
                 var warehouseModel = new WarehouseLocationModel(nodes, edges);
 
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
+                using (var solver = new GurobiSolver())
+                {
+                    // solve the model
+                    var solution = solver.Solve(warehouseModel.Model);
 
-                // solve the model
-                var solution = solver.Solve(warehouseModel.Model);
+                    // import the results back into the model 
+                    warehouseModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
-                // import the results back into the model 
-                warehouseModel.Model.VariableCollections
-                .ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+                    // print objective and variable decisions
+                    Console.WriteLine($"{solution.ObjectiveValues.Single()}");
+                    warehouseModel.x.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
+                    warehouseModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
 
-                // print objective and variable decisions
-                Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                warehouseModel.x.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
-                warehouseModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
-
-                warehouseModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    warehouseModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    Console.ReadLine();
+                }
             }
-
-            Console.ReadLine();
         }
     }
 }

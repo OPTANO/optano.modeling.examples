@@ -314,3 +314,7 @@ paket-files/
 /Source/MIP_WLP/OptimizationConfigSection.csd.xsd
 /Source/MIP_WLP/gurobi.lic
 /Source/MIP_WLP/gurobi75.dll
+Source/MIP_CLSP/clspPlot.svg
+Source/MIP_CLSP/clspPlot.pdf
+Source/MIP_CLSP/clsp.mps
+Source/MIP_CLSP/clsp.lp

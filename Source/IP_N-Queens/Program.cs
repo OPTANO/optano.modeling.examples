@@ -28,42 +28,41 @@ namespace QueensProblem
             // set size of the board - board is always a square
             int dimension = 8;
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(config))
             {
-
                 // create a model, based on given data and the model scope
                 var queensModel = new QueensModel(dimension);
 
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
-
-                // solve the model
-                var solution = solver.Solve(queensModel.Model);
-
-                // import the results back into the model 
-                queensModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
-
-                // print objective and variable decisions
-                Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                //queensModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
-
-                Console.WriteLine("Result: ");
-
-                foreach (var row in Enumerable.Range(0, dimension))
+                using (var solver = new GurobiSolver())
                 {
-                    foreach (var col in Enumerable.Range(0, dimension))
-                    {
+                    // solve the model
+                    var solution = solver.Solve(queensModel.Model);
 
-                        Console.Write(string.Format(queensModel.y[row, col].Value + "  "));
+                    // import the results back into the model 
+                    queensModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+
+                    // print objective and variable decisions
+                    Console.WriteLine($"{solution.ObjectiveValues.Single()}");
+                    Console.WriteLine("Result: ");
+
+                    foreach (var row in Enumerable.Range(0, dimension))
+                    {
+                        foreach (var col in Enumerable.Range(0, dimension))
+                        {
+                            Console.Write(string.Format(queensModel.y[row, col].Value + "  "));
+                        }
+
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
+
+                    Console.ReadLine();
                 }
             }
-            Console.ReadLine();
         }
     }
 }

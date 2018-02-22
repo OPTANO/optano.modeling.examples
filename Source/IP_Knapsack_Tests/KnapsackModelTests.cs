@@ -32,7 +32,7 @@ namespace IP_Knapsack_Tests
             // maximum weight of all the items
             _maxWeight = 10.8;
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration
             {
                 NameHandling = NameHandlingStyle.UniqueLongNames,
@@ -45,16 +45,17 @@ namespace IP_Knapsack_Tests
                 var knapsackModel = new KnapsackModel(_items, _maxWeight);
 
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
-
-                // solve the model
-                var solution = solver.Solve(knapsackModel.Model);
-
-                // import the results back into the model 
-                knapsackModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
-                foreach (var knapsackItem in _items)
+                using (var solver = new GurobiSolver())
                 {
-                    knapsackItem.IsPacked = Math.Abs(knapsackModel.y[knapsackItem].Value - 1) < scope.EPSILON;
+                    // solve the model
+                    var solution = solver.Solve(knapsackModel.Model);
+
+                    // import the results back into the model 
+                    knapsackModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+                    foreach (var knapsackItem in _items)
+                    {
+                        knapsackItem.IsPacked = Math.Abs(knapsackModel.y[knapsackItem].Value - 1) < scope.EPSILON;
+                    }
                 }
             }
         }

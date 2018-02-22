@@ -39,7 +39,7 @@ namespace CLSP
             csv.Configuration.CultureInfo = new CultureInfo("en-US");
             var periodInformation = csv.GetRecords<PeriodInformation>();
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration
             {
                 NameHandling = NameHandlingStyle.Manual,
@@ -47,33 +47,29 @@ namespace CLSP
             };
             using (var scope = new ModelScope(config))
             {
-
                 // create a model, based on given data and the model scope
                 var clspModel = new CapacitatedLotsizingModel(periodInformation);
 
-                var solverCfg = new GurobiSolverConfiguration()
-                {
-                    ModelOutputFile = new FileInfo("clsp.lp"),
-                };
+                var solverCfg = new GurobiSolverConfiguration() { ModelOutputFile = new FileInfo("clsp.lp"), };
 
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver(solverCfg);
+                using (var solver = new GurobiSolver(solverCfg))
+                {
+                    // solve the model
+                    var solution = solver.Solve(clspModel.Model);
 
-                // solve the model
-                var solution = solver.Solve(clspModel.Model);
-                
-                // print objective and variable decisions
-                Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                clspModel.y.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
-                clspModel.x.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
-                clspModel.s.Variables.ForEach(s => Console.WriteLine($"{s.ToString().PadRight(36)}: {s.Value}"));
+                    // print objective and variable decisions
+                    Console.WriteLine($"{solution.ObjectiveValues.Single()}");
+                    clspModel.y.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
+                    clspModel.x.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
+                    clspModel.s.Variables.ForEach(s => Console.WriteLine($"{s.ToString().PadRight(36)}: {s.Value}"));
 
-                clspModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
+                    clspModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
 
-                PlottingUtils.CreateAndExportLotSizingPlot(clspModel);
+                    PlottingUtils.CreateAndExportLotSizingPlot(clspModel);
+                    Console.ReadLine();
+                }
             }
-
-            Console.ReadLine();
         }
     }
 }

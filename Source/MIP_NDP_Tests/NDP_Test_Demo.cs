@@ -66,28 +66,26 @@ namespace MIP_NDP_Tests
             // assign these edges to a list of IEdges
             edges = new List<IEdge> {one, two, three, four, five, six};
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             configuration = new Configuration();
             configuration.NameHandling = NameHandlingStyle.UniqueLongNames;
             configuration.ComputeRemovedVariables = true;
             using (var scope = new ModelScope(configuration))
             {
-
-
                 // create a model, based on given data and the model scope
                 designModel = new NetworkDesignModel(nodes, edges);
                 // Get a solver instance, change your solver
-                var solver = new GurobiSolver();
+                using (var solver = new GurobiSolver())
+                {
+                    // solve the model
+                    // if this fails: check if this project references the solver. Add one and update the using, if required.
+                    var solution = solver.Solve(designModel.Model);
 
-                // solve the model
-                // if this fails: check if this project references the solver. Add one and update the using, if required.
-                var solution = solver.Solve(designModel.Model);
-
-                // import the results back into the model 
-                designModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
-                scope.ModelBehavior = OPTANO.Modeling.Optimization.Configuration.ModelBehavior.Manual;
+                    // import the results back into the model 
+                    designModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+                    scope.ModelBehavior = OPTANO.Modeling.Optimization.Configuration.ModelBehavior.Manual;
+                }
             }
-
         }
 
         /// <summary>

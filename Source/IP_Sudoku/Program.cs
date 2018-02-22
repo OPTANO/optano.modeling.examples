@@ -46,7 +46,7 @@ namespace Sudoku
                     { null, null, null, null, null, null, null,    7, null },
                 };
 
-            // use default settings
+            // Use long names for easier debugging/model understanding.
             var config = new Configuration();
             config.NameHandling = NameHandlingStyle.UniqueLongNames;
             config.ComputeRemovedVariables = true;
@@ -54,35 +54,43 @@ namespace Sudoku
             {
                 // create a model, based on given data and the model scope
                 var sudokuModel = new SudokuModel(size, section, game);
-                
+
                 // get a solver instance, change your solver
-                var solver = new GurobiSolver();
-
-                // solve the model
-                var solution = solver.Solve(sudokuModel.Model);
-
-                // print objective and variable decisions
-                Console.WriteLine("Result: ");
-                foreach (var row in size)
+                using (var solver = new GurobiSolver())
                 {
-                    foreach (var col in size)
+                    // solve the model
+                    var solution = solver.Solve(sudokuModel.Model);
+
+                    // print objective and variable decisions
+                    Console.WriteLine("Result: ");
+                    foreach (var row in size)
                     {
-                        foreach (var value in size)
+                        foreach (var col in size)
                         {
-                            if (sudokuModel.field[col, row, value].Value > 0)
+                            foreach (var value in size)
                             {
-                                Console.Write(string.Format("   {0}", value + 1));
+                                if (sudokuModel.field[col, row, value].Value > 0)
+                                {
+                                    Console.Write(string.Format("   {0}", value + 1));
+                                }
+                            }
+                            if ((col + 1) % 3 == 0)
+                            {
+                                Console.Write("  ");
                             }
                         }
-                        if ((col + 1) % 3 == 0) Console.Write("  ");
+
+                        if ((row + 1) % 3 == 0)
+                        {
+                            Console.WriteLine();
+                        }
+
+                        Console.WriteLine();
                     }
-                    if ((row + 1 ) % 3 == 0) Console.WriteLine();
-                    Console.WriteLine();
+
+                    Console.ReadLine();
                 }
-
-
             }
-            Console.ReadLine();
         }
     }
 }

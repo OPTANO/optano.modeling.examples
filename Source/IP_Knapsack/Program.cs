@@ -12,7 +12,7 @@ namespace Knapsack
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi752;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi810;
 
     /// <summary>
     /// Demo program solving a Knapsack Problem

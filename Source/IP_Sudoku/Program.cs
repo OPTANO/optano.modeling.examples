@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OPTANO.Modeling.Optimization.Solver.Gurobi752;
+using OPTANO.Modeling.Optimization.Solver.Gurobi810;
 
 namespace Sudoku
 {

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OPTANO.Modeling.Optimization.Solver.Gurobi810;
 
 namespace NDP
 {
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi752;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi810;
 
     /// <summary>
     /// Demo program solving a network design problem

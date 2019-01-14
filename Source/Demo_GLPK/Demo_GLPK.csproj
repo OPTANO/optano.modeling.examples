@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OPTANO.Modeling" Version="2.12.0.415" />
+    <PackageReference Include="OPTANO.Modeling" Version="2.14.0.426-pre" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Demo_GLPK_netframework</RootNamespace>
     <AssemblyName>Demo_GLPK_netframework</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,8 +52,11 @@
     <Reference Include="MathNet.Symbolics, Version=0.20.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Symbolics.0.20.0\lib\net45\MathNet.Symbolics.dll</HintPath>
     </Reference>
-    <Reference Include="optano.modeling, Version=2.14.0.426, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OPTANO.Modeling.2.14.0.426-pre\lib\net45\optano.modeling.dll</HintPath>
+    <Reference Include="Microsoft.Z3, Version=4.8.4.0, Culture=neutral, PublicKeyToken=9c8d792caae602a2, processorArchitecture=AMD64">
+      <HintPath>..\packages\Microsoft.Z3.x64.4.8.4\lib\netstandard1.4\Microsoft.Z3.dll</HintPath>
+    </Reference>
+    <Reference Include="optano.modeling, Version=3.0.1.451, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OPTANO.Modeling.3.0.1.451\lib\netstandard20\optano.modeling.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -83,19 +87,7 @@
     <Content Include="libglpk_cli_native.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MipCL131WrapperCpp.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MipCL140WrapperCpp.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MipCL141WrapperCpp.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MipCL162WrapperCpp.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MipCL172WrapperCpp.dll">
+    <Content Include="MipCL213WrapperCpp.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

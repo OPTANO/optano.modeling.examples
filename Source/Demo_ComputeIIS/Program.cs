@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,12 +48,20 @@ namespace Demo_ComputeIIS
                 model.AddConstraint(brokenConstraint1);
                 model.AddObjective(new Objective(x1 + 2 * x2 + 3 * x3, "obj"));
 
-                var solverConfig = new CplexSolverConfiguration() {ComputeIIS = true};
+                var solverConfig = new CplexSolverConfiguration()
+                {
+                    ComputeIIS = true,
+                    // todo: insert your path to cplex solver binary folder here
+                    LibraryPaths =
+                    {
+                        new DirectoryInfo(@"..\..\..\..\Tools\CPLEX\128\x64\"),
+                    }
+                };
                 var solver = new CplexSolver(solverConfig);
                 var solution = solver.Solve(model);
 
                 Assert.IsTrue(solution.ConflictingSet.ConstraintsLB.Contains(brokenConstraint1));
-                Assert.IsTrue(solution.ConflictingSet.ConstraintsLB.Contains(brokenConstraint2));
+                Assert.IsTrue(solution.ConflictingSet.ConstraintsUB.Contains(brokenConstraint2));
 
             }
         }

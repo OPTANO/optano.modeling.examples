@@ -1,6 +1,7 @@
 ﻿using OPTANO.Modeling.Optimization.Solver.GLPK;
 using System;
 using OPTANO.Modeling.Optimization;
+using OPTANO.Modeling.Optimization.Configuration;
 using OPTANO.Modeling.Optimization.Enums;
 
 namespace Demo_GLPK_framework
@@ -27,16 +28,16 @@ namespace Demo_GLPK_framework
             - Create new project
             - Project settings, build: disable prefer 32bit
             - Add this program.cs
-            - Add Nuget OPTANO Modeling 2.12 package
+            - Add Nuget OPTANO Modeling 3.0 package
             - Add the required glpk dlls and set them to "copy always" (see todo above)
            
         */
 
         static void Main(string[] args)
         {
-
             // Use long names for easier debugging/model understanding.
-            using (var scope = new ModelScope())
+            var scopeConfig = new Configuration() { NameHandling = NameHandlingStyle.UniqueLongNames };
+            using (var scope = new ModelScope(scopeConfig))
             {
                 var model = new Model();
 
@@ -49,7 +50,14 @@ namespace Demo_GLPK_framework
 
                 using (var solver = new GLPKSolver())
                 {
-                    solver.Solve(model);
+                    var solution = solver.Solve(model);
+
+                    Console.WriteLine("Solution:");
+                    Console.WriteLine($"x = {x.Value}");
+                    Console.WriteLine($"y = {y.Value}");
+
+                    var objVal = solution.GetObjectiveValue("goal") ?? double.NaN;
+                    Console.WriteLine($"goal = {objVal:N2}");
                 }
             }
         }

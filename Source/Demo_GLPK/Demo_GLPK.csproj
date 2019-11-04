@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,17 +15,17 @@
 
   <ItemGroup>
     <Reference Include="libglpk-cli">
-      <HintPath>..\..\..\..\Tools\GLPK\glpk-4.60\w64\libglpk-cli.dll</HintPath>
+      <HintPath>libglpk-cli.dll</HintPath>
       <Private>true</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="glpk_4_60.dll">
+    <None Update="glpk_4_65.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="libglpk_cli_native.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="libglpk-cli.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

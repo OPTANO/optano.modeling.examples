@@ -8,6 +8,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="OPTANO.Modeling" Version="3.0.1.451" />
-    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="8.1.0.16" />
+    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="8.1.1.19" />
   </ItemGroup>
 </Project>

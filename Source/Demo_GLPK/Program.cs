@@ -1,6 +1,8 @@
 ﻿using OPTANO.Modeling.Optimization.Solver.GLPK;
 using System;
+using System.IO;
 using OPTANO.Modeling.Optimization;
+using OPTANO.Modeling.Optimization.Configuration;
 using OPTANO.Modeling.Optimization.Enums;
 
 namespace Demo_GLPK
@@ -11,8 +13,8 @@ namespace Demo_GLPK
 
         /* TODO: Before you start
         
-            - Add the glpk_4_60.dll to the project ("Add Existing Item"). 
-            - Set the glpk_4_60.dll, "copy to output directory" to "copy always" in the project. 
+            - Add the glpk_4_65.dll to the project ("Add Existing Item"). 
+            - Set the glpk_4_65.dll, "copy to output directory" to "copy always" in the project. 
             
             - Add the libglpk-cli.dll as a reference (shall appear under Dependencies / Assemblies)
             - Set the libglpk-cli reference to "copy local" = yes
@@ -20,9 +22,13 @@ namespace Demo_GLPK
 
         static void Main(string[] args)
         {
-
+            var glpkConfig = new GLPKSolverConfiguration()
+            {
+                LibraryPaths = { new DirectoryInfo(@"..\..\..\..\..\Tools\GLPK\glpk-4.65\w64\") }
+            };
             // Use long names for easier debugging/model understanding.
-            using (var scope = new ModelScope())
+            var scopeConfig = new Configuration() { NameHandling = NameHandlingStyle.UniqueLongNames };
+            using (var scope = new ModelScope(scopeConfig))
             {
                 var model = new Model();
 
@@ -30,12 +36,18 @@ namespace Demo_GLPK
                 var y = new Variable("y", 0, double.PositiveInfinity, VariableType.Integer);
 
                 model.AddObjective(new Objective(2 * x + y + 10, "goal", ObjectiveSense.Maximize), "goal");
-
                 model.AddConstraint(x + y <= 100);
 
-                using (var solver = new GLPKSolver())
+                using (var solver = new GLPKSolver(glpkConfig))
                 {
-                    solver.Solve(model);
+                    var solution = solver.Solve(model);
+
+                    Console.WriteLine("Solution:");
+                    Console.WriteLine($"x = {x.Value}");
+                    Console.WriteLine($"y = {y.Value}");
+
+                    var objVal = solution.GetObjectiveValue("goal") ?? double.NaN;
+                    Console.WriteLine($"goal = {objVal:N2}");
                 }
             }
         }

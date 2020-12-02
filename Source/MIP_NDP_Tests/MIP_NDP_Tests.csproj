@@ -10,8 +10,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0-beta3" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0-beta3" />
-    <PackageReference Include="OPTANO.Modeling" Version="3.0.1.451" />
-    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="8.1.1.19" />
+    <PackageReference Include="OPTANO.Modeling" Version="3.5.1.504" />
+    <PackageReference Include="OPTANO.Modeling.Gurobi" Version="9.0.2.24" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MIP_NDP\MIP_NDP.csproj" />

@@ -1,5 +1,4 @@
-﻿using OPTANO.Modeling.Optimization.Solver.GLPK;
-using System;
+﻿using System;
 using System.IO;
 using OPTANO.Modeling.Optimization;
 using OPTANO.Modeling.Optimization.Configuration;
@@ -7,15 +6,17 @@ using OPTANO.Modeling.Optimization.Enums;
 
 namespace Demo_GLPK
 {
+    using OPTANO.Modeling.GLPK;
+
     class Program
     {
 
 
         /* TODO: Before you start
-        
-            - Add the glpk_4_65.dll to the project ("Add Existing Item"). 
-            - Set the glpk_4_65.dll, "copy to output directory" to "copy always" in the project. 
-            
+            - install the Optano.Modeling.GLPK NuGet package
+            - Add the glpk_4_65.dll to the project ("Add Existing Item").
+            - Set the glpk_4_65.dll, "copy to output directory" to "copy always" in the project.
+
             - Add the libglpk-cli.dll as a reference (shall appear under Dependencies / Assemblies)
             - Set the libglpk-cli reference to "copy local" = yes
         */

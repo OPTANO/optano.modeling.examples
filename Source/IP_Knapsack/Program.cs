@@ -54,18 +54,49 @@ namespace Knapsack
                 {
                     // solve the model
                     var solution = solver.Solve(knapsackModel.Model);
+                    ExportSolution(solution, knapsackModel);
+                    // results from solution are already "synced" with variables in knapsack model.
+                    Program.AllowActivationOfAtMost4ActiveVariables(knapsackModel);
 
-                    // import the results back into the model 
-                    knapsackModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+                    // re-solve 1
+                    var solutionB = solver.Solve(knapsackModel.Model);
+                    ExportSolution(solutionB, knapsackModel);
+                    Program.AllowActivationOfAtMost4ActiveVariables(knapsackModel);
 
-                    // print objective and variable decisions
-                    Console.WriteLine($"{solution.ObjectiveValues.Single()}");
-                    knapsackModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
-
-                    knapsackModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
-                    Console.ReadLine();
+                    // re-solve 2
+                    var solutionC = solver.Solve(knapsackModel.Model);
+                    ExportSolution(solutionC, knapsackModel);
                 }
             }
+        }
+
+        /// <summary>
+        /// Adds a constraint to the model that prevents the solver from simply re-using the old solution.
+        /// At most 4 variables that were active in the current solution are allowed to be active in the next solution.
+        /// Serves only to demonstrate the modification + resolve functionality of the framework.
+        /// </summary>
+        /// <param name="knapsackModel">The current (solved) model</param>
+        private static void AllowActivationOfAtMost4ActiveVariables(KnapsackModel knapsackModel)
+        {
+            var activeVariables = knapsackModel.y.Variables.Where(v => Math.Round(v.Value) >= 1).ToList();
+            // only add constraint if it will "do something"
+            if (!activeVariables.Any() || activeVariables.Count <= 4)
+            {
+                return;
+            }
+            var info = $"Limiting the usage of the following variables to at most 4:{Environment.NewLine.PadRight(9)}{string.Join($",{Environment.NewLine}".PadRight(10), activeVariables.OrderBy(v => v.Name).Select(v => v.Name))}";
+            Console.WriteLine(info);
+            var limitUsageOfItems = Expression.Sum(activeVariables) <= 4;
+            knapsackModel.Model.AddConstraint(limitUsageOfItems);
+        }
+
+        private static void ExportSolution(Solution solution, KnapsackModel knapsackModel)
+        {
+            // print objective and variable decisions
+            Console.WriteLine($"{solution.ObjectiveValues.Single()}");
+            knapsackModel.y.Variables.OrderBy(y => y.Name).ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
+
+            knapsackModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 
 namespace JobScheduling
 {
@@ -172,8 +172,6 @@ namespace JobScheduling
 
                         Console.WriteLine("---");
                     }
-
-                    Console.ReadLine();
                 }
             }
         }

@@ -11,7 +11,7 @@ namespace TSP
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi900;
     using System.IO;
 
     /// <summary>
@@ -64,7 +64,7 @@ namespace TSP
                     // solve the model
                     var solution = solver.Solve(travelingSalesmanModel.Model);
 
-                    // import the results back into the model 
+                    // import the results back into the model
                     travelingSalesmanModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
                     // print objective and variable decisions
@@ -72,7 +72,6 @@ namespace TSP
                     travelingSalesmanModel.y.Variables.ForEach(x => Console.WriteLine($"{x.ToString().PadRight(36)}: {x.Value}"));
 
                     travelingSalesmanModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
-                    Console.ReadLine();
                 }
             }
         }

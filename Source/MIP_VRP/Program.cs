@@ -11,7 +11,7 @@ namespace VRP
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 
     /// <summary>
     /// Demo program solving a vehicle routing problem
@@ -27,7 +27,7 @@ namespace VRP
         static void Main(string[] args)
         {
 
-            INode pad = new Node("Paderborn", 0, true); // Starting node (depot) 
+            INode pad = new Node("Paderborn", 0, true); // Starting node (depot)
                                                        // of our vehicle routing problem
             INode nyc = new Node("New York", 1500, false);
             INode bjs = new Node("Beijing", 2000, false);
@@ -37,7 +37,7 @@ namespace VRP
             var nodes = new List<INode> { pad, nyc, bjs, sao, sfo };
 
             var edges = new List<IEdge>
-                            {   
+                            {
                                 //Paderborn outgoing
                                 new Edge(pad, nyc, 6130),
                                 new Edge(pad, bjs, 7660),
@@ -95,7 +95,7 @@ namespace VRP
                             Console.WriteLine(conflicts);
                         }
 
-                        // import the results back into the model 
+                        // import the results back into the model
                         VRPModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
                         // print objective and variable decisions
@@ -109,7 +109,6 @@ namespace VRP
                     {
                         Console.WriteLine(e);
                     }
-                    Console.ReadLine();
                 }
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 
 namespace Sudoku
 {
@@ -25,14 +25,14 @@ namespace Sudoku
         /// </param>
         static void Main(string[] args)
         {
-            
+
             var size = Enumerable.Range(0, 9).ToList();
             var section = size.GroupBy(s => s / 3);
 
             // you may manipulate the following game, which is the initial state of the Sudoku to your liking
             // note: obviously not observing the rules of Sudoku here makes the problem infeasible
             var game = new int?[,] {
-                    //  0    1      2     3     4    5     6     7     8 
+                    //  0    1      2     3     4    5     6     7     8
                     { null,    3, null, null, null, null, null, null, null },
                     { null, null, null,    1,    9,    5, null, null, null },
                     { null, null,    8, null, null, null, null,    6, null },
@@ -87,8 +87,6 @@ namespace Sudoku
 
                         Console.WriteLine();
                     }
-
-                    Console.ReadLine();
                 }
             }
         }

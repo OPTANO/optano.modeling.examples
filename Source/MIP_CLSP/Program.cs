@@ -17,7 +17,7 @@ namespace CLSP
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 
     /// <summary>
     /// Demo program solving a Capacitated Lot-Sizing Problem
@@ -67,7 +67,6 @@ namespace CLSP
                     clspModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
 
                     PlottingUtils.CreateAndExportLotSizingPlot(clspModel);
-                    Console.ReadLine();
                 }
             }
         }

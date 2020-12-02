@@ -318,3 +318,6 @@ Source/MIP_CLSP/clspPlot.svg
 Source/MIP_CLSP/clspPlot.pdf
 Source/MIP_CLSP/clsp.mps
 Source/MIP_CLSP/clsp.lp
+Tools/CPLEX
+Tools/GLPK
+Source/Demo_GLPK/libglpk-cli.dll

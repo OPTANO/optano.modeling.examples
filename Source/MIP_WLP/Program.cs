@@ -9,7 +9,7 @@ namespace WLP
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 
     /// <summary>
     /// Demo program solving a Warehouse Location Problem
@@ -61,7 +61,7 @@ namespace WLP
                     // solve the model
                     var solution = solver.Solve(warehouseModel.Model);
 
-                    // import the results back into the model 
+                    // import the results back into the model
                     warehouseModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
                     // print objective and variable decisions
@@ -70,7 +70,6 @@ namespace WLP
                     warehouseModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
 
                     warehouseModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
-                    Console.ReadLine();
                 }
             }
         }

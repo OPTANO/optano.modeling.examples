@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using OPTANO.Modeling.Optimization.Configuration;
 using OPTANO.Modeling.Optimization;
-using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 using OPTANO.Modeling.Common;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NDP;
 
-/// <summary>
-/// This is a Demo Test Project for NDP
-/// </summary>
 namespace MIP_NDP_Tests
 {
     /// <summary>
     /// A demo of test cases for NDP
-    /// 
-    /// ATTENTION: CHOOSE THE PLATTFORM OF YOUR SOLVER BEFORE RUNNING TESTS: x64 // x86
+    ///
+    /// ATTENTION: CHOOSE THE PLATFORM OF YOUR SOLVER BEFORE RUNNING TESTS: x64 // x86
     /// </summary>
     [TestClass]
     public class NDP_Test1
@@ -42,7 +39,7 @@ namespace MIP_NDP_Tests
         private List<NDP.IEdge> edges;
 
         /// <summary>
-        /// Test initializer, generating the network and setting all data required by tests 
+        /// Test initializer, generating the network and setting all data required by tests
         /// </summary>
         [TestInitialize]
         public void Init()
@@ -81,7 +78,7 @@ namespace MIP_NDP_Tests
                     // if this fails: check if this project references the solver. Add one and update the using, if required.
                     var solution = solver.Solve(designModel.Model);
 
-                    // import the results back into the model 
+                    // import the results back into the model
                     designModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
                     scope.ModelBehavior = OPTANO.Modeling.Optimization.Configuration.ModelBehavior.Manual;
                 }

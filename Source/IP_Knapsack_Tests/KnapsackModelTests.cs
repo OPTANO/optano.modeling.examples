@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OPTANO.Modeling.Common;
 using OPTANO.Modeling.Optimization;
 using OPTANO.Modeling.Optimization.Configuration;
-using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 
 namespace IP_Knapsack_Tests
 {
@@ -50,7 +50,7 @@ namespace IP_Knapsack_Tests
                     // solve the model
                     var solution = solver.Solve(knapsackModel.Model);
 
-                    // import the results back into the model 
+                    // import the results back into the model
                     knapsackModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
                     foreach (var knapsackItem in _items)
                     {

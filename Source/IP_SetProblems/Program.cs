@@ -11,7 +11,7 @@ namespace SetProblems
     using OPTANO.Modeling.Common;
     using OPTANO.Modeling.Optimization;
     using OPTANO.Modeling.Optimization.Configuration;
-    using OPTANO.Modeling.Optimization.Solver.Gurobi810;
+    using OPTANO.Modeling.Optimization.Solver.Gurobi900;
 
     /// <summary>
     /// Demo program solving Set-problem(s)
@@ -35,17 +35,17 @@ namespace SetProblems
             IElement five = new Element("five", 5);
 
             // create full set
-            ISet_E fullSet = new Set_E("full_set", 
+            ISet_E fullSet = new Set_E("full_set",
                              new List<IElement> { one, two, three, four, five} , 0, true);
 
             // create subsets
-            ISet_E subset_1 = new Set_E("subset_1", 
+            ISet_E subset_1 = new Set_E("subset_1",
                               new List<IElement> { one, three }, 8, false);
-            ISet_E subset_2 = new Set_E("subset_2", 
+            ISet_E subset_2 = new Set_E("subset_2",
                               new List<IElement> { three, five }, 16, false);
-            ISet_E subset_3 = new Set_E("subset_3", 
+            ISet_E subset_3 = new Set_E("subset_3",
                               new List<IElement> { three }, 6, false);
-            ISet_E subset_4 = new Set_E("subset_4", 
+            ISet_E subset_4 = new Set_E("subset_4",
                               new List<IElement> { one, two, four }, 15, false);
             ISet_E subset_5 = new Set_E("subset_5",
                               new List<IElement> { one, five }, 7, false);
@@ -68,7 +68,7 @@ namespace SetProblems
                     // solve the model
                     var solution = solver.Solve(setProblemModel.Model);
 
-                    // import the results back into the model 
+                    // import the results back into the model
                     setProblemModel.Model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
 
                     // print objective and variable decisions
@@ -76,7 +76,6 @@ namespace SetProblems
                     setProblemModel.y.Variables.ForEach(y => Console.WriteLine($"{y.ToString().PadRight(36)}: {y.Value}"));
 
                     setProblemModel.Model.VariableStatistics.WriteCSV(AppDomain.CurrentDomain.BaseDirectory);
-                    Console.ReadLine();
                 }
             }
         }

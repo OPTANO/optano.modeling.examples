@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OPTANO.Modeling" Version="3.5.1.504" />
+    <PackageReference Include="OPTANO.Modeling" Version="3.6.0.510" />
   </ItemGroup>
 
   <ItemGroup>
